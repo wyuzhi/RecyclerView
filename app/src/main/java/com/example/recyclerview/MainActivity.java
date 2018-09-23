@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getJSON();
         initView();
+        getJSON();
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                         mExampleList.addAll(catBean);
                         mExampleAdapter.notifyDataSetChanged();
                         mSwipeRefresh.setRefreshing(false);
-                        mExampleAdapter.notifyDataSetChanged();
 
                         break;
                     case FAIL_GET_DATA:
