@@ -71,9 +71,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
 
 
     private void getJSON() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(3, TimeUnit.SECONDS)
-                .build();
+        OkHttpClient client = OkHttpClientHelper.getInstance();
         Request request = new Request.Builder()
                 .url("https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=kitten&image_type=photo&pretty=true")
                 .get()
