@@ -44,6 +44,9 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         CatBean currentItem = mExampleList.get(position);
+        if (currentItem == null) {
+            return;
+        }
 
         String imageUrl = currentItem.getImageUrl();
         String creatorName = currentItem.getCreator();

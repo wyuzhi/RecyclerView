@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     public static final int SUCCESS_GET_DATA = 1;
     public static final int FAIL_GET_DATA = 2;
 
+    private SwipeRefreshLayout swipeRefresh;
+
+
+
     private Handler mHandler;
     private ExampleAdapter mExampleAdapter;
     private List<CatBean> mExampleList;
@@ -38,6 +39,14 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        swipeRefresh = findViewById(R.id.swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshCats();
+            }
+        });
+
         initView();
         mHandler = new Handler() {
             @Override
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                         mExampleList.clear();
                         mExampleList.addAll(catBean);
                         mExampleAdapter.notifyDataSetChanged();
+
                         break;
                     case FAIL_GET_DATA:
                         Toast.makeText(MainActivity.this, "网络异常", Toast.LENGTH_LONG).show();
@@ -56,6 +66,27 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                 }
             }
         };
+    }
+
+    private void refreshCats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initView();
+                        mExampleAdapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 
     private void initView() {

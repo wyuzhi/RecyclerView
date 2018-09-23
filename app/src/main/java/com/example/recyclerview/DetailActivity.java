@@ -24,6 +24,9 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
+        if (intent == null){
+            return;
+        }
         String imageUrl = intent.getStringExtra(EXTRA_URL);
         String creatorName = intent.getStringExtra(EXTRA_CREATOR);
         int likeCount = intent.getIntExtra(EXTRA_LIKES,0);
