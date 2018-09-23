@@ -16,10 +16,4 @@ public class OkHttpClientHelper {
         }
         return sClient;
     }
-
-    private static OkHttpClient sClient1 = new OkHttpClient.Builder()
-            .connectTimeout(3, TimeUnit.SECONDS)
-            .build();
-
-
 }
