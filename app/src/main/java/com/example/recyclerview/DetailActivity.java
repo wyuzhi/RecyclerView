@@ -24,12 +24,18 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
-        if (intent == null){
+        if (intent == null) {
             return;
         }
         String imageUrl = intent.getStringExtra(EXTRA_URL);
+        if (imageUrl == null) {
+            return;
+        }
         String creatorName = intent.getStringExtra(EXTRA_CREATOR);
-        int likeCount = intent.getIntExtra(EXTRA_LIKES,0);
+        if (creatorName == null) {
+            return;
+        }
+        int likeCount = intent.getIntExtra(EXTRA_LIKES, 0);
 
         ImageView imageView = findViewById(R.id.image_view_detail);
         TextView textViewCreator = findViewById(R.id.text_creator_detail);
@@ -37,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
         textViewCreator.setText(creatorName);
-        textViewLikes.setText("Likes"+likeCount);
+        textViewLikes.setText("Likes" + likeCount);
 
     }
 }

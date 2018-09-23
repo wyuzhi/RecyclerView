@@ -27,9 +27,8 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     public static final int SUCCESS_GET_DATA = 1;
     public static final int FAIL_GET_DATA = 2;
 
-    private SwipeRefreshLayout swipeRefresh;
-
-
+    private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefresh;
 
     private Handler mHandler;
     private ExampleAdapter mExampleAdapter;
@@ -39,14 +38,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        swipeRefresh = findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshCats();
-            }
-        });
-
+        getJSON();
         initView();
         mHandler = new Handler() {
             @Override
@@ -58,46 +50,35 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                         mExampleList.clear();
                         mExampleList.addAll(catBean);
                         mExampleAdapter.notifyDataSetChanged();
+                        mSwipeRefresh.setRefreshing(false);
+                        mExampleAdapter.notifyDataSetChanged();
 
                         break;
                     case FAIL_GET_DATA:
                         Toast.makeText(MainActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+                        mSwipeRefresh.setRefreshing(false);
                         break;
                 }
             }
         };
     }
 
-    private void refreshCats() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initView();
-                        mExampleAdapter.notifyDataSetChanged();
-                        swipeRefresh.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
-    }
-
     private void initView() {
-        RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
+        mSwipeRefresh = findViewById(R.id.swipe_refresh);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getJSON();
+            }
+        });
+
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mExampleList = new ArrayList<>();
         mExampleAdapter = new ExampleAdapter(mExampleList, this);
         mRecyclerView.setAdapter(mExampleAdapter);
         mExampleAdapter.setOnItemClickListener(this);
-        getJSON();
     }
 
 
