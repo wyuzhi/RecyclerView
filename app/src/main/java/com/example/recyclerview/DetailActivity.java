@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,9 +29,6 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
         String imageUrl = intent.getStringExtra(EXTRA_URL);
-        if (imageUrl == null) {
-            return;
-        }
         String creatorName = intent.getStringExtra(EXTRA_CREATOR);
         if (creatorName == null) {
             return;
@@ -41,7 +39,9 @@ public class DetailActivity extends AppCompatActivity {
         TextView textViewCreator = findViewById(R.id.text_creator_detail);
         TextView textViewLikes = findViewById(R.id.text_like_detail);
 
-        Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
+        if(!TextUtils.isEmpty(imageUrl)){
+            Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
+        }
         textViewCreator.setText(creatorName);
         textViewLikes.setText("Likes" + likeCount);
 
