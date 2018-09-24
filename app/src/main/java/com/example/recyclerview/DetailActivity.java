@@ -39,8 +39,10 @@ public class DetailActivity extends AppCompatActivity {
         }
         int likeCount = intent.getIntExtra(EXTRA_LIKES, 0);
 
-        if ((!TextUtils.isEmpty(imageUrl)) && (!TextUtils.isEmpty(creatorName))) {
+        if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
+        }
+        if (!TextUtils.isEmpty(creatorName)) {
             textViewCreator.setText(creatorName);
         }
         textViewLikes.setText("Likes" + likeCount);
