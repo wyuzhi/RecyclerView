@@ -24,6 +24,10 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        ImageView imageView = findViewById(R.id.image_view_detail);
+        TextView textViewCreator = findViewById(R.id.text_creator_detail);
+        TextView textViewLikes = findViewById(R.id.text_like_detail);
+
         Intent intent = getIntent();
         if (intent == null) {
             return;
@@ -35,11 +39,7 @@ public class DetailActivity extends AppCompatActivity {
         }
         int likeCount = intent.getIntExtra(EXTRA_LIKES, 0);
 
-        ImageView imageView = findViewById(R.id.image_view_detail);
-        TextView textViewCreator = findViewById(R.id.text_creator_detail);
-        TextView textViewLikes = findViewById(R.id.text_like_detail);
-
-        if(!TextUtils.isEmpty(imageUrl)){
+        if (!TextUtils.isEmpty(imageUrl)) {
             Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
         }
         textViewCreator.setText(creatorName);
