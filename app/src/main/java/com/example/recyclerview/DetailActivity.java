@@ -34,9 +34,6 @@ public class DetailActivity extends AppCompatActivity {
         }
         String imageUrl = intent.getStringExtra(EXTRA_URL);
         String creatorName = intent.getStringExtra(EXTRA_CREATOR);
-        if (creatorName == null) {
-            return;
-        }
         int likeCount = intent.getIntExtra(EXTRA_LIKES, 0);
 
         if (!TextUtils.isEmpty(imageUrl)) {

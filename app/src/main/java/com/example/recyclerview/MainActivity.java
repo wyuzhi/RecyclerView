@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     private void getJSON() {
         OkHttpClient client = OkHttpClientHelper.getInstance();
         Request request = new Request.Builder()
-                .url("https://pixabay.com/api/?key=10221697-4ec9853b2ce2d7a4f7847449e&q=kitten&image_type=photo&pretty=true&page=1&per_page=200")
+                .url("https://pixabay.com/api/?key=10221697-4ec9853b2ce2d7a4f7847449e&q=kitten&image_type=photo&pretty=true&page=1&per_page=10")
                 .get()
                 .build();
         Call call = client.newCall(request);
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                 mHandler.sendMessage(message);
             }
         });
+
     }
 
     @Override

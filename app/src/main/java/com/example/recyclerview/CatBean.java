@@ -46,6 +46,9 @@ public class CatBean {
             }
             List<CatBean> mExampleList = new ArrayList();
             JSONArray jsonArray = jsonObject.optJSONArray("hits");
+            if (jsonArray == null) {
+                return null;
+            }
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject hit = jsonArray.optJSONObject(i);
                 String creatorName = hit.optString("user");
