@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CatBean {
+    private String mImageUrl;
+    private String mCreator;
+    private int mLikes;
+
     public String getImageUrl() {
         return mImageUrl;
     }
@@ -23,10 +27,6 @@ public class CatBean {
         return mLikes;
     }
 
-
-    private String mImageUrl;
-    private String mCreator;
-    private int mLikes;
 
     public CatBean(String mImageUrl, String mCreator, int mLikes) {
         this.mImageUrl = mImageUrl;

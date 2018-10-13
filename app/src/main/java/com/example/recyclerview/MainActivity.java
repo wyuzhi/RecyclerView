@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     public static final int SUCCESS_GET_DATA = 1;
     public static final int FAIL_GET_DATA = 2;
 
+    int page = 1;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefresh;
 
@@ -39,13 +40,14 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        getJSON();
+        getJSON(page);
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case SUCCESS_GET_DATA:
+                        page ++;
                         List<CatBean> catBean = (List) msg.obj;
                         mExampleList.clear();
                         mExampleList.addAll(catBean);
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getJSON();
+                getJSON(page);
             }
         });
 
@@ -81,10 +83,11 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     }
 
 
-    private void getJSON() {
+    private void getJSON(int mpage) {
+        mpage = page;
         OkHttpClient client = OkHttpClientHelper.getInstance();
         Request request = new Request.Builder()
-                .url("https://pixabay.com/api/?key=10221697-4ec9853b2ce2d7a4f7847449e&q=kitten&image_type=photo&pretty=true&page=1&per_page=10")
+                .url("https://pixabay.com/api/?key=10221697-4ec9853b2ce2d7a4f7847449e&q=kitten&image_type=photo&pretty=true&page=" + mpage + "&per_page=10")
                 .get()
                 .build();
         Call call = client.newCall(request);
