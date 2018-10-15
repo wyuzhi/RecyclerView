@@ -1,5 +1,7 @@
 package com.example.recyclerview;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +10,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -35,10 +39,22 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     private ExampleAdapter mExampleAdapter;
     private List<CatBean> mExampleList;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+            /*
+    设置一键到顶按钮的点击事件
+     */
+            final Button ivTop = findViewById(R.id.top);
+            ivTop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.scrollToPosition(0);
+                }
+            });
+
         initView();
         getJSON(page);
         mHandler = new Handler() {
