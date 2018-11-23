@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
     public static final int FAIL_GET_DATA = 2;
 
     int page = 1;
+    private Button mGoTopBtn;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefresh;
 
@@ -47,13 +48,13 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
             /*
     设置一键到顶按钮的点击事件
      */
-            final Button ivTop = findViewById(R.id.top);
-            ivTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRecyclerView.scrollToPosition(0);
-                }
-            });
+        mGoTopBtn = findViewById(R.id.but_go_top);
+        mGoTopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecyclerView.scrollToPosition(0);
+            }
+        });
 
         initView();
         getJSON(page);
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements ExampleAdapter.On
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case SUCCESS_GET_DATA:
-                        page ++;
+                        page++;
                         List<CatBean> catBean = (List) msg.obj;
                         mExampleList.clear();
                         mExampleList.addAll(catBean);

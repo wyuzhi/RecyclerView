@@ -20,7 +20,7 @@
 
 
     <Button
-        android:id="@+id/top"
+        android:id="@+id/but_go_top"
         android:layout_width="68dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
